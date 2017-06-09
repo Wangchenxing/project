@@ -7,7 +7,11 @@ define(['jquery', 'cookie'], function($) {
 	});
 
 
-
+	var pathname = location.pathname;
+	if (pathname != '/login' && !$.cookie('PHPSESSID')) {
+		location.href = "/login";
+	}
+	console.log($.cookie('loginInfo'));
 	// 退出功能
 	$("#logout").click(function(event) {
 		/* Act on the event */

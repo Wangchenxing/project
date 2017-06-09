@@ -1,22 +1,3 @@
-// define(['jquery','cookie'],function($){
-// 	// 登陆功能
-// 	$("#btnLogin").click(function(event) {
-// 		$.ajax({
-// 			url: '/api/login',
-// 			type: 'post',
-// 			dataType: 'json',
-// 			data: $("#formLogin").serialize(),
-// 			success: function(data) {
-// 				if (data.code == 200) {
-					
-// 					location.href = "/index/index";
-// 				}
-// 			}
-// 		});
-// 		return false;
-// 	});
-// });
-
 define(['jquery','cookie'],function($){
     // 实现登录功能
     $('#btnLogin').click(function(){
@@ -28,7 +9,7 @@ define(['jquery','cookie'],function($){
             success : function(data){
                 if(data.code == 200){
                     // 把登录的用户信息存储到cookie里面，方便页面之间进行数据共享
-                    // $.cookie('loginInfo',JSON.stringify(data.result),{path:'/'});
+                    $.cookie('loginInfo',JSON.stringify(data.result),{path:'/'});
                     // 跳转到主页面
                     location.href = '/index/index';
                 }
