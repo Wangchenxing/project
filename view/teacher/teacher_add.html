@@ -6,9 +6,9 @@
     <?php include("view/common/style.html"); ?>
 </head>
 <body>
-    
-<!-- 侧边栏 -->
-<?php include("view/common/aside.html"); ?>
+
+    <!-- 侧边栏 -->
+    <?php include("view/common/aside.html"); ?>
     <!-- 主体 -->
     <div class="main">
         <div class="container-fluid">
@@ -21,7 +21,7 @@
                     <li class="active">讲师添加</li>
                 </ol>
                 <div class="teacher-add">
-                    <form action="" class="form-horizontal col-xs-offset-2">
+                    <form action="" class="form-horizontal col-xs-offset-2" id="teacherAddinfo">
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">姓名</label>
                             <div class="col-xs-4">
@@ -62,7 +62,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-xs-7">
-                                <a href="./advert_list.html" class="btn btn-success btn-sm pull-right"> 添 加 </a>
+                                <a href="javascript:;" class="btn btn-success btn-sm pull-right" id="addTeacherBtn"> 添 加 </a>
                             </div>                          
                         </div>
                     </form>
@@ -71,6 +71,76 @@
         </div>
     </div>
 
- <?php include("view/common/script.html"); ?>
+    <?php include("view/common/script.html"); ?>
+    <script>
+      requirejs(['teacher_add']);
+  </script>
+
+  <script type="text/template" id="teacherAddTpl">
+  {{if tc_id}}
+  <div style="display: none">
+      <input type="text" name="tc_name" value="{{tc_name}}">
+  </div>
+     <div class="form-group">
+        <label for="" class="col-xs-3 control-label">姓名</label>
+        <div class="col-xs-4">
+            <input type="text" class="form-control input-sm" name="tc_name" value="{{tc_name}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-3 control-label">密码</label>
+        <div class="col-xs-4">
+            <input type="password" class="form-control input-sm" value="qwertyui" disabled="disabled">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-3 control-label">入职时间</label>
+        <div class="col-xs-4">
+            <input type="text" class="form-control input-sm" name="tc_join_date" value="{{tc_join_date}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-3 control-label">类型</label>
+        <div class="col-xs-2">
+            {{if tc_type == 0}}
+            <select name="" class="form-control input-sm" name="tc_type">
+                <option value="1">讲师</option>
+                <option value="0" selected="selected">管理员</option>
+            </select>
+            {{else}}
+            <select name="" class="form-control input-sm" name="tc_type">
+                <option value="1" selected="selected">讲师</option>
+                <option value="0">管理员</option>
+            </select>
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="" class="col-xs-3 control-label">性别</label>
+        <div class="col-xs-4">
+            {{if tc_gender == "0"}}
+            <label class="radio-inline">
+                <input type="radio" checked name="tc_gende"> 男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="tc_gende"> 女
+            </label>
+            {{else}}
+            <label class="radio-inline">
+                <input type="radio" name="tc_gende"> 男
+            </label>
+            <label class="radio-inline">
+                <input type="radio" checked name="tc_gende"> 女
+            </label>
+            {{/if}}
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-xs-7">
+            <a href="javascript:;" class="btn btn-success btn-sm pull-right" id="addTeacherBtn"> 添 加 </a>
+        </div>                          
+    </div>
+    {{/if}}
+</script>
 </body>
 </html>

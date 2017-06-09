@@ -11,7 +11,12 @@ define(['jquery', 'cookie'], function($) {
 	if (pathname != '/login' && !$.cookie('PHPSESSID')) {
 		location.href = "/login";
 	}
-	console.log($.cookie('loginInfo'));
+	var loginInfo = $.cookie('loginInfo') && JSON.parse($.cookie('loginInfo'));
+	if (loginInfo) {
+		// 渲染页面
+		$('.aside .profile').find('img').attr('src', loginInfo.tc_avatar);
+		$('.aside .profile').find('h4').text(loginInfo.tc_name);
+	}
 	// 退出功能
 	$("#logout").click(function(event) {
 		/* Act on the event */

@@ -1,28 +1,7 @@
-// define(['jquery'], function($) {
-
-// 	// 教师列表
-	// $.ajax({
-	// 	url: '/api/teacher',
-	// 	type: 'get',
-	// 	dataType: 'json',
-	// 	success: function(data) {
-	// 		// console.log(data.result);
-	// 		for (var i = 0; i < data.result.length; i++) {
-	// 			var result = data.result[i];
-	// 			var tc_gender = result.tc_gender = 0 ? "女" : "男";
-	// 			var str = "<tr><td>" + result.tc_id + "</td><td>" + (i + 1) + "</td><td>" + result.tc_name + "</td><td>" + result.tc_roster + "</td><td>" + ages(result.tc_birthday) + "</td><td>" + tc_gender + "</td><td>" + result.tc_cellphone + "</td><td><a href='javascript:' data-toggle='modal' class='btn btn-info btn-xs'>查 看</a><a href='/teacher/teacher_add' class='btn btn-info btn-xs'>编 辑</a><a href='javascript:;' class='btn btn-warning btn-xs'>注 销</a></td></tr>";
-	// 			$("#tList tbody").append(str);
-	// 			$("#tList thead tr").find('th:eq(0)').hide();
-	// 			$("#tList tbody tr").find('td:eq(0)').hide();
-	// 		}
-	// 	}
-	// });
-// });
-
-define(['jquery'], function($) {
-	// 实现功能
-
+define(['jquery', 'template', 'util','bootstrap'], function($, template,util) {
 	// 年龄计算
+	util.setMenu(location.pathname);
+	// 计算年龄方法实现
 	function ages(str) {
 		var r = str.match(/^(\d{1,4})(-|\/)(\d{1,2})\2(\d{1,2})$/);
 		if (r == null) return false;
@@ -34,21 +13,81 @@ define(['jquery'], function($) {
 		return ("输入的日期格式错误！");
 	}
 
-	
+	// 数据列表请求
 	$.ajax({
 		url: '/api/teacher',
 		type: 'get',
 		dataType: 'json',
 		success: function(data) {
-			// console.log(data.result);
 			for (var i = 0; i < data.result.length; i++) {
-				var result = data.result[i];
-				var tc_gender = result.tc_gender = 0 ? "女" : "男";
-				var str = "<tr><td>" + result.tc_id + "</td><td>" + (i + 1) + "</td><td>" + result.tc_name + "</td><td>" + result.tc_roster + "</td><td>" + ages(result.tc_birthday) + "</td><td>" + tc_gender + "</td><td>" + result.tc_cellphone + "</td><td><a href='javascript:' data-toggle='modal' class='btn btn-info btn-xs'>查 看</a><a href='/teacher/teacher_add' class='btn btn-info btn-xs'>编 辑</a><a href='javascript:;' class='btn btn-warning btn-xs'>注 销</a></td></tr>";
-				$("#tList tbody").append(str);
-				$("#tList thead tr").find('th:eq(0)').hide();
-				$("#tList tbody tr").find('td:eq(0)').hide();
+				data.result[i].tc_birthday = ages(data.result[i].tc_birthday);
 			}
+			var html = template('teacherInfoTpl', {
+				list: data.result
+			});
+			$("#teacherInfo").html(html);
+			previewTeacher();
+			enableOrDisableTeacher();
+			addTeacher();
 		}
 	});
+
+	function previewTeacher() {
+		$("#teacherInfo").find('.preview').click(function(event) {
+			var tcId = $(this).closest('td').attr('data-id');
+			$.ajax({
+				url: '/api/teacher/view',
+				type: 'GET',
+				dataType: 'json',
+				data: {
+					tc_id: tcId
+				},
+				success: function(data) {
+					data.result.tc_hometown = data.result.tc_hometown.replace(/\|/g, " ");
+					var html = template('teacherModalInfoTpl', data.result);
+					$('#teacherModalInfo').html(html);
+					$('#teacherModal').modal();
+				}
+			});
+
+		});
+	}
+
+	function enableOrDisableTeacher() {
+		$("#teacherInfo").find('.changeTeacher').click(function(event) {
+			var _this = this;
+			var td = $(this).closest('td');
+
+			var tcId = $(this).closest('td').attr('data-id');
+			var tcStatus = td.attr('data-status');
+			$.ajax({
+				url: '/api/teacher/handle',
+				type: 'post',
+				dataType: 'json',
+				data: {
+					tc_id: tcId,
+					tc_status: tcStatus
+				},
+				success: function(data) {
+					if (data.code == 200) {
+						td.attr('data-status', data.result.tc_status);
+					}
+					if (data.result.tc_status == "0") {
+						$(_this).text("注 销");
+					} else {
+						$(_this).text("启 用");
+					}
+				}
+			});
+		});
+	}
+
+	function addTeacher(){
+		$("#teacherInfo").find('.editTeacher').click(function(event) {
+			var tcId = $(this).closest('td').attr('data-id');
+			location.href = "/teacher/teacher_add?tc_id="+tcId;
+		});
+	}
+
+
 });
