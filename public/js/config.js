@@ -5,6 +5,7 @@ requirejs.config({
         bootstrap: 'bootstrap/js/bootstrap.min',
         template: 'artTemplate/template-web',
         cookie: 'jquery-cookie/jquery.cookie',
+        nprogress:'nprogress/nprogress',
         common: '../js/common',
         util: '../js/util',
         // echarts:'echarts/echarts.min',

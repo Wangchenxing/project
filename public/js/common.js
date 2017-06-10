@@ -1,4 +1,4 @@
-define(['jquery', 'cookie'], function($) {
+define(['jquery','nprogress', 'cookie'], function($,nprogress) {
 
 
 
@@ -32,5 +32,18 @@ define(['jquery', 'cookie'], function($) {
 		});
 
 	});
+
+	$(document).ajaxStart(function() {
+		$(".overlay").show();
+	});
+
+	$(document).ajaxStop(function() {
+		$(".overlay").hide();
+	});
+
+	// 进度条控制
+	nprogress.start();
+	nprogress.done();
+	
 
 });
