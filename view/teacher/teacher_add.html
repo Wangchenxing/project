@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>学IT - 后台管理系统</title>
     <?php include("view/common/style.html"); ?>
+    <link rel="stylesheet" href="/public/assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css">
 </head>
 <body>
 
@@ -25,27 +26,30 @@
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">姓名</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control input-sm" placeholder="讲师名称">
+                                <input name="tc_name" type="text" class="form-control input-sm" placeholder="讲师名称" data-required="true" data-description="tcName" data-describedby="tcNameId">
                             </div>
+                             <div class="col-sx-2" id="tcNameId"></div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">密码</label>
                             <div class="col-xs-4">
-                                <input type="password" class="form-control input-sm">
+                                <input name="tc_pass" type="password" class="form-control input-sm" data-required="true" data-description="tcPass" data-describedby="tcPassId">
                             </div>
+                             <div class="col-sx-2" id="tcPassId"></div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">入职时间</label>
                             <div class="col-xs-4">
-                                <input type="text" class="form-control input-sm">
+                                <input name="tc_join_date" data-provide="datepicker" data-date-format='yyyy-mm-dd' type="text" class="form-control input-sm datepicker" data-required="true" data-description="tcJoinDate" data-describedby="tcJoinDateId">
                             </div>
+                             <div class="col-sx-2" id="tcJoinDateId"></div>
                         </div>
                         <div class="form-group">
                             <label for="" class="col-xs-3 control-label">类型</label>
                             <div class="col-xs-2">
-                                <select name="" class="form-control input-sm">
-                                    <option value="">讲师</option>
-                                    <option value="">管理员</option>
+                                <select name="tc_type" class="form-control input-sm">
+                                    <option value="1">讲师</option>
+                                    <option value="0">管理员</option>
                                 </select>
                             </div>
                         </div>
@@ -53,16 +57,17 @@
                             <label for="" class="col-xs-3 control-label">性别</label>
                             <div class="col-xs-4">
                                 <label class="radio-inline">
-                                    <input type="radio" checked> 男
+                                    <input name="tc_gender" type="radio" checked value="0"> 男
                                 </label>
                                 <label class="radio-inline">
-                                    <input type="radio"> 女
+                                    <input name="tc_gender" type="radio" value="1"> 女
                                 </label>
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-xs-7">
-                                <a href="javascript:;" class="btn btn-success btn-sm pull-right" id="addTeacherBtn"> 添 加 </a>
+                               <!--  <a href="javascript:;" class="btn btn-success btn-sm pull-right" id="addTeacherBtn"> 添 加 </a> -->
+                               <input type="submit" value="添 加" id="addTeacherBtn" class="btn btn-success btn-sm pull-right">
                             </div>                          
                         </div>
                     </form>
@@ -78,41 +83,18 @@
 
   <script type="text/template" id="teacherAddTpl">
   {{if tc_id}}
-  <div style="display: none">
-      <input type="text" name="tc_name" value="{{tc_name}}">
-  </div>
      <div class="form-group">
+     <input type="hidden" name="tc_id" value="{{tc_id}}">
         <label for="" class="col-xs-3 control-label">姓名</label>
         <div class="col-xs-4">
-            <input type="text" class="form-control input-sm" name="tc_name" value="{{tc_name}}">
+            <input type="text" class="form-control input-sm" data-describedby='tcNameId' data-description="tcName" data-required="true"  name="tc_name" value="{{tc_name}}">
         </div>
-    </div>
-    <div class="form-group">
-        <label for="" class="col-xs-3 control-label">密码</label>
-        <div class="col-xs-4">
-            <input type="password" class="form-control input-sm" value="qwertyui" disabled="disabled">
-        </div>
+        <div class="col-sx-2" id="tcNameId"></div>
     </div>
     <div class="form-group">
         <label for="" class="col-xs-3 control-label">入职时间</label>
         <div class="col-xs-4">
-            <input type="text" class="form-control input-sm" name="tc_join_date" value="{{tc_join_date}}">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="" class="col-xs-3 control-label">类型</label>
-        <div class="col-xs-2">
-            {{if tc_type == 0}}
-            <select name="" class="form-control input-sm" name="tc_type">
-                <option value="1">讲师</option>
-                <option value="0" selected="selected">管理员</option>
-            </select>
-            {{else}}
-            <select name="" class="form-control input-sm" name="tc_type">
-                <option value="1" selected="selected">讲师</option>
-                <option value="0">管理员</option>
-            </select>
-            {{/if}}
+            <input name="tc_join_date" data-provide="datepicker" data-date-format='yyyy-mm-dd' type="text" class="form-control input-sm" value="{{tc_join_date}}">
         </div>
     </div>
     <div class="form-group">
@@ -120,24 +102,24 @@
         <div class="col-xs-4">
             {{if tc_gender == "0"}}
             <label class="radio-inline">
-                <input type="radio" checked name="tc_gende"> 男
+                <input type="radio" checked name="tc_gender" value="0"> 男
             </label>
             <label class="radio-inline">
-                <input type="radio" name="tc_gende"> 女
+                <input type="radio" name="tc_gender"  value="1"> 女
             </label>
             {{else}}
             <label class="radio-inline">
-                <input type="radio" name="tc_gende"> 男
+                <input type="radio" name="tc_gender" value="0"> 男
             </label>
             <label class="radio-inline">
-                <input type="radio" checked name="tc_gende"> 女
+                <input type="radio" checked name="tc_gender" value="1"> 女
             </label>
             {{/if}}
         </div>
     </div>
     <div class="form-group">
         <div class="col-xs-7">
-            <a href="javascript:;" class="btn btn-success btn-sm pull-right" id="addTeacherBtn"> 添 加 </a>
+           <input type="button" value="保 存" id="addTeacherBtn" class="btn btn-success btn-sm pull-right">
         </div>                          
     </div>
     {{/if}}

@@ -82,9 +82,9 @@
             <td>{{$value.tc_birthday}}</td>
             <td>
                 {{if $value.tc_gender == 1}}
-                男
-                {{else}}
                 女
+                {{else}}
+                男
                 {{/if}}
             </td>
             <td>{{$value.tc_cellphone}}</td>
@@ -124,13 +124,13 @@
                 <tr>
                     <th>性别:</th>
                     <td>
-                        {{if tc_birthday == 1}}
+                        {{if tc_gender == "1"}}
                         女
                         {{else}}
                         男
                         {{/if}}
                     </td>
-                    <th>出生日期:</th><td colspan="3">{{tc_birthday}}</td>
+                    <th>入职日期:</th><td colspan="3">{{tc_join_date}}</td>
                 </tr>
                 <tr>
                     <th>手机号码:</th><td colspan="2">{{tc_cellphone}}</td>
