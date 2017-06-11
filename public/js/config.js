@@ -15,7 +15,8 @@ requirejs.config({
         login: '../js/login',
         index:'../js/index',
         teacher: '../js/teacher',
-        teacher_add: '../js/teacher_add'
+        teacher_add: '../js/teacher_add',
+        settings:'../js/settings'
     },
     shim: { // 兼容非标准模块
         bootstrap: {
