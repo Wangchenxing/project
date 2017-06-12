@@ -9,6 +9,10 @@ requirejs.config({
         nprogress:'nprogress/nprogress',
         datepicker:'bootstrap-datepicker/js/bootstrap-datepicker.min',
         language:'bootstrap-datepicker/locales/bootstrap-datepicker.zh-CN.min',
+        upload:'upload/jquery.uploadify.min',
+        form:'jquery-form/jquery.form',
+        region:'region/jquery.region',
+        ckeditor:'ckeditor/ckeditor',
         common: '../js/common',
         util: '../js/util',
         // echarts:'echarts/echarts.min',
@@ -30,6 +34,12 @@ requirejs.config({
         },
         validate:{
             deps:['jquery']
+        },
+        upload:{
+            deps:['jquery']
+        },
+        ckeditor : {
+            exports : 'CKEDITOR'
         }
     }
 });
