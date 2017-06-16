@@ -20,7 +20,11 @@ requirejs.config({
         index:'../js/index',
         teacher: '../js/teacher',
         teacher_add: '../js/teacher_add',
-        settings:'../js/settings'
+        settings:'../js/settings',
+        course_list:'../js/course-list',
+        course_basic:'../js/course-basic',
+        course_add:'../js/course-add',
+        course_picture:'../js/course-picture'
     },
     shim: { // 兼容非标准模块
         bootstrap: {
